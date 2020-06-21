@@ -130,3 +130,7 @@ dmypy.json
 
 # PyCharm project
 .idea/
+
+# Telethon session files
+*.session
+*.session-journal
