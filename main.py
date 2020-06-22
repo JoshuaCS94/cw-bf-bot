@@ -24,8 +24,8 @@ with TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN) as bot:
         all_members = await bot.get_participants(chat)
 
         users = filter(lambda p: p.id != sender_id and not p.bot, all_members)
-        usernames = list(map(lambda u: f'@{u.username}', users))
-        reply = "\n".join(usernames)
+        users_mentions = list(map(lambda u: f'[{u.first_name}](tg://user?id={u.id})', users))
+        reply = "\n".join(users_mentions)
 
         await event.respond(reply)
 
