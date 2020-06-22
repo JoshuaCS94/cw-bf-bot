@@ -1,4 +1,5 @@
 import os
+import asyncio
 
 from telethon import TelegramClient, events
 
@@ -27,7 +28,6 @@ with TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN) as bot:
         mentions = list(map(lambda u: f'[{u.first_name}](tg://user?id={u.id})', users))
         grouped_mentions = ["\n".join(mentions[k: k + 5]) for k in range(0, len(mentions), 5)]
 
-        for m in grouped_mentions:
-            await event.respond(m)
+        await asyncio.wait(map(event.respond, grouped_mentions))
 
     bot.run_until_disconnected()
