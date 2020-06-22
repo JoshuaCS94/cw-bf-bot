@@ -24,9 +24,10 @@ with TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN) as bot:
         all_members = await bot.get_participants(chat)
 
         users = filter(lambda p: p.id != sender_id and not p.bot, all_members)
-        users_mentions = list(map(lambda u: f'[{u.first_name}](tg://user?id={u.id})', users))
-        reply = "\n".join(users_mentions)
+        mentions = list(map(lambda u: f'[{u.first_name}](tg://user?id={u.id})', users))
+        grouped_mentions = ["\n".join(mentions[k: k + 5]) for k in range(0, len(mentions), 5)]
 
-        await event.respond(reply)
+        for m in grouped_mentions:
+            await event.respond(m)
 
     bot.run_until_disconnected()
